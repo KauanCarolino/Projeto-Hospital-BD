@@ -25,16 +25,16 @@ public class Main {
 		
 			
 		//Atualizar o contato 
-		Pacientes paciente2 = new Pacientes();
+//		Pacientes paciente2 = new Pacientes();
 //		paciente2.setNome("Kauan");
 //		paciente2.setCpf("12345678900");
 //		paciente2.setSexo("M");
 //		paciente2.setTelefone("99999-9991");
-		paciente2.setDataNasc("2004-08-24");
+//		paciente2.setDataNasc("2004-08-24");
 //		paciente2.setEndereco("Rua das Pedras");
 //		paciente2.setUf("CE");
-		paciente2.setProntuario(1);//Número da Chave primária
-		pacientesDao.update(paciente2);
+//		paciente2.setProntuario(1);//Número da Chave primária
+//		pacientesDao.update(paciente2);
 
 
 		//Deletar o contato pelo ID

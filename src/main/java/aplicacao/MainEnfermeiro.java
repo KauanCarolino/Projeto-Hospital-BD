@@ -1,14 +1,17 @@
 package aplicacao;
 
 import dao.EnfermeiroDao;
+import dao.PacientesDao;
 import model.Enfermeiros;
 import model.Pacientes;
+
+import java.util.List;
 
 public class MainEnfermeiro {
     public static void main(String[] args) {
 
         EnfermeiroDao enfermeirosDao = new EnfermeiroDao();
-//		List<Pacientes> pacientes = pacientesDao.getPacientes();
+		List<Enfermeiros> pacientes = EnfermeiroDao.getEnfermeiros();
 
 //		Enfermeiros enfermeiros = new Enfermeiros();
 //        enfermeiros.setCoren(121);
@@ -32,6 +35,13 @@ public class MainEnfermeiro {
 //        enfermeiros2.setCoren(121);//Número da Chave primária
 //        EnfermeiroDao.update(enfermeiros2);
 
+//        Deletar o contato pelo ID
+//		enfermeirosDao.deleteByPK(121);
+
+        //Visualização dos registros do banco de dados TODOS os registros
+        for(Enfermeiros e : EnfermeiroDao.getEnfermeiros()) {
+            System.out.println("Coren: "+e.getCoren()+" Enfermeiros: "+e.getNome());
+        }
     }
 }
 
