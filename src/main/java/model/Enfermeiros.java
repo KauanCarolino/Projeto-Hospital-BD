@@ -4,6 +4,7 @@ public class Enfermeiros {
     private int coren;
     private String nome;
     private String sexo;
+    private String senha;
     private String especialidade;
     private String telefone;
     private String dataNasc;
@@ -31,6 +32,12 @@ public class Enfermeiros {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public String getSenha() {return senha;}
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getEspecialidade() {
