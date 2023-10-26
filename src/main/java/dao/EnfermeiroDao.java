@@ -14,8 +14,8 @@ public class EnfermeiroDao {
     public static void save(Enfermeiros enfermeiros) {
 
 
-        String sql = "INSERT INTO enfermeiros(coren, nome, sexo, especialidade, telefone, dataNasc, uf) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO enfermeiros(coren, nome, sexo, senha, especialidade, telefone, dataNasc, uf) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -30,10 +30,11 @@ public class EnfermeiroDao {
             pstm.setInt(1, enfermeiros.getCoren());
             pstm.setString(2, enfermeiros.getNome());
             pstm.setString(3, enfermeiros.getSexo());
-            pstm.setString(4, enfermeiros.getEspecialidade());
-            pstm.setString(5, enfermeiros.getTelefone());
-            pstm.setString(6, enfermeiros.getDataNasc());
-            pstm.setString(7, enfermeiros.getUf());
+            pstm.setString(4, enfermeiros.getSenha());
+            pstm.setString(5, enfermeiros.getEspecialidade());
+            pstm.setString(6, enfermeiros.getTelefone());
+            pstm.setString(7, enfermeiros.getDataNasc());
+            pstm.setString(8, enfermeiros.getUf());
             //Executar a query
             pstm.execute();
 
@@ -60,7 +61,7 @@ public class EnfermeiroDao {
 
     public static void update(Enfermeiros enfermeiros) {
 
-        String sql = "UPDATE enfermeiros SET nome = ?, sexo = ?, Especialidade = ?, telefone = ?, dataNasc = ?, uf = ? "
+        String sql = "UPDATE enfermeiros SET nome = ?, sexo = ?, senha = ?, Especialidade = ?, telefone = ?, dataNasc = ?, uf = ? "
                 + "WHERE coren = ?";
 
         Connection conn = null;
@@ -75,13 +76,14 @@ public class EnfermeiroDao {
             //Adiciona valores para atualizar
             pstm.setString(1, enfermeiros.getNome());
             pstm.setString(2, enfermeiros.getSexo());
-            pstm.setString(3, enfermeiros.getEspecialidade());
-            pstm.setString(4, enfermeiros.getTelefone());
-            pstm.setString(5, enfermeiros.getDataNasc());
-            pstm.setString(6, enfermeiros.getUf());
+            pstm.setString(4, enfermeiros.getSenha());
+            pstm.setString(4, enfermeiros.getEspecialidade());
+            pstm.setString(5, enfermeiros.getTelefone());
+            pstm.setString(6, enfermeiros.getDataNasc());
+            pstm.setString(7, enfermeiros.getUf());
 
             //Qual o ID do registro que deseja atualizar
-            pstm.setInt(7, enfermeiros.getCoren());
+            pstm.setInt(8, enfermeiros.getCoren());
 
             //Executando a query
             pstm.execute();
@@ -160,6 +162,8 @@ public class EnfermeiroDao {
                 enfermeiro.setNome(rset.getString("nome"));
 
                 enfermeiro.setSexo(rset.getString("sexo"));
+
+                enfermeiro.setSenha(rset.getString("senha"));
 
                 enfermeiro.setEspecialidade(rset.getString("Especialidade"));
 
