@@ -21,6 +21,7 @@ CREATE TABLE medicos(
 	CRM INT(6) PRIMARY KEY,
     Nome VARCHAR(200),
     Sexo ENUM("M","F"),
+    Senha VARCHAR(255),
     Especialidade VARCHAR(100),
     Telefone VARCHAR(10),
     dataNasc DATE,
@@ -34,6 +35,7 @@ CREATE TABLE enfermeiros(
 	COREN INT(6) PRIMARY KEY,
 	Nome VARCHAR(200),
 	Sexo ENUM("M","F"),
+    Senha VARCHAR(255),
 	Especialidade VARCHAR(100),
 	Telefone VARCHAR(10),
 	dataNasc DATE,
@@ -47,3 +49,5 @@ SET GLOBAL max_connections = 1500;
 ALTER TABLE pacientes MODIFY CPF VARCHAR(15); 
 
 SELECT * FROM pacientes;
+SELECT * FROM medicos;
+SELECT * FROM enfermeiros;
