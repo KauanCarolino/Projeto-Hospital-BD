@@ -14,33 +14,34 @@ public class MainEnfermeiro {
 		List<Enfermeiros> pacientes = EnfermeiroDao.getEnfermeiros();
 
 //		Enfermeiros enfermeiros = new Enfermeiros();
-//        enfermeiros.setCoren(121);
-//		enfermeiros.setNome("Julio");
-//		enfermeiros.setSexo("M");
+//        enfermeiros.setCoren(222);
+//		enfermeiros.setNome("Maria");
+//		enfermeiros.setSexo("F");
+//        enfermeiros.setSenha("1111");
 //        enfermeiros.setEspecialidade("Pediatria");
-//		enfermeiros.setTelefone("98888-8888");
-//		enfermeiros.setDataNasc("1994-04-12");
+//		enfermeiros.setTelefone("91111-1111");
+//		enfermeiros.setDataNasc("1984-01-08");
 //		enfermeiros.setUf("CE");
 //		EnfermeiroDao.save(enfermeiros);
 
         //Atualizar o contato
-//        Enfermeiros enfermeiros2 = new Enfermeiros();
-//        enfermeiros2.setCoren(121);
-//		enfermeiros2.setNome("Julio");
-//		enfermeiros2.setSexo("M");
-//        enfermeiros2.setEspecialidade("Legista");
-//		enfermeiros2.setTelefone("98888-8888");
-//		enfermeiros2.setDataNasc("1994-04-12");
-//		enfermeiros2.setUf("CE");
-//        enfermeiros2.setCoren(121);//Número da Chave primária
-//        EnfermeiroDao.update(enfermeiros2);
+        Enfermeiros enfermeiros2 = new Enfermeiros();
+        enfermeiros2.setCoren(222);
+        enfermeiros2.setNome("Maria");
+        enfermeiros2.setSexo("F");
+        enfermeiros2.setSenha("1111");
+        enfermeiros2.setEspecialidade("Pediatria");
+        enfermeiros2.setTelefone("91111-1111");
+        enfermeiros2.setDataNasc("1984-01-08");
+        enfermeiros2.setUf("CE");
+        EnfermeiroDao.update(enfermeiros2);
 
 //        Deletar o contato pelo ID
 //		enfermeirosDao.deleteByPK(121);
 
         //Visualização dos registros do banco de dados TODOS os registros
         for(Enfermeiros e : EnfermeiroDao.getEnfermeiros()) {
-            System.out.println("Coren: "+e.getCoren()+" Enfermeiros: "+e.getNome());
+            System.out.println("Coren: "+e.getCoren()+" Enfermeiros(a): "+e.getNome());
         }
     }
 }

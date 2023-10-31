@@ -2,6 +2,7 @@ package dao;
 
 import factory.ConnectionFactory;
 import model.Enfermeiros;
+import model.Medicos;
 import model.Pacientes;
 
 import java.sql.Connection;
@@ -76,7 +77,7 @@ public class EnfermeiroDao {
             //Adiciona valores para atualizar
             pstm.setString(1, enfermeiros.getNome());
             pstm.setString(2, enfermeiros.getSexo());
-            pstm.setString(4, enfermeiros.getSenha());
+            pstm.setString(3, enfermeiros.getSenha());
             pstm.setString(4, enfermeiros.getEspecialidade());
             pstm.setString(5, enfermeiros.getTelefone());
             pstm.setString(6, enfermeiros.getDataNasc());
@@ -138,6 +139,50 @@ public class EnfermeiroDao {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static Enfermeiros getEnfermeiroByCredentials(String coren, String senha) {
+        String sql = "SELECT * FROM enfermeiros WHERE coren = ? AND senha = ?";
+        Enfermeiros enfermeiros = null;
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, Integer.parseInt(coren));
+            pstm.setString(2, senha);
+            rset = pstm.executeQuery();
+
+            if (rset.next()) {
+                enfermeiros = new Enfermeiros();
+                enfermeiros.setCoren(rset.getInt("coren"));
+                enfermeiros.setNome(rset.getString("nome"));
+                enfermeiros.setSenha(rset.getString("senha"));
+                // Outros campos
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rset != null) {
+                    rset.close();
+                }
+
+                if (pstm != null) {
+                    pstm.close();
+                }
+
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return enfermeiros;
     }
 
     public static List<Enfermeiros> getEnfermeiros() {

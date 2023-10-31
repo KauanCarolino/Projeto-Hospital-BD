@@ -3,7 +3,7 @@ module com.example.dahospitalproject {
     requires javafx.fxml;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
-    requires mysql.connector.j;
+//    requires mysql.connector.j;
 
     opens com.example.dahospitalproject to javafx.fxml;
     exports interfaceFX; // Adicione a exportação do pacote interfaceFX

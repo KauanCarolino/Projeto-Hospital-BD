@@ -1,11 +1,13 @@
 package interfaceFX;
 
+import dao.EnfermeiroDao;
 import dao.MedicoDao;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import model.Enfermeiros;
 import model.Medicos;
 
 public class TelaLoginApp extends Application {
@@ -21,26 +23,36 @@ public class TelaLoginApp extends Application {
         Scene scene = new Scene(root, 300, 200);
 
         TextField usernameField = new TextField();
-        usernameField.setPromptText("Nome de Usuário");
+        usernameField.setPromptText("Coren ou Crm");
+
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("Senha");
-        Button confirmButton = new Button("Confirmar");
+
+        Button confirmButton = new Button("Logar-se");
+
+        Button botaoCadastro = new Button("Cadastra-se");
+
         confirmButton.setOnAction(e -> {
             String username = usernameField.getText();
             String senha = passwordField.getText();
 
             // Verificar as credenciais no banco de dados
             Medicos medico = MedicoDao.getMedicoByCredentials(username, senha);
-
+            Enfermeiros enfermeiro = EnfermeiroDao.getEnfermeiroByCredentials(username, senha);
             if (medico != null) {
-                exibirTelaBemVindo(username);
+                exibirTelaBemVindo(medico.getNome());
+            } else if (enfermeiro != null) {
+                exibirTelaBemVindo(enfermeiro.getNome());
             } else {
                 // Exibir mensagem de erro ou redirecionar para a tela de erro
-                System.out.println("Nome de usuário ou senha inválidos.");
+                System.out.println("Coren/Crm ou senha inválidos.");
             }
         });
 
-        root.getChildren().addAll(usernameField, passwordField, confirmButton);
+        botaoCadastro.setOnAction(e->escolherFuncionario());
+        //exibe as caixas de texto nomeUsuario, senha e os 2 botões
+        root.getChildren().addAll(usernameField,passwordField,confirmButton,botaoCadastro);
+        root.setAlignment(javafx.geometry.Pos.CENTER);
 
         stage.setScene(scene);
         stage.show();
@@ -66,5 +78,32 @@ public class TelaLoginApp extends Application {
         //exibe a mensagem de boa vindas
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void escolherFuncionario(){
+
+        VBox root = new VBox(10);
+        Scene scene = new Scene(root, 300, 200);
+        Stage enfermeiro = new Stage();
+        Stage medico = new Stage();
+
+        TelaCadastroEnfermeiro instanciaEnfermeiro = new TelaCadastroEnfermeiro();
+        TelaCadastroMedico instanciamedico = new TelaCadastroMedico();
+
+        Button botaoEnfermeiro = new Button("Enfermeiro");
+        botaoEnfermeiro.setOnAction(e->instanciaEnfermeiro.start(enfermeiro));
+
+        Button  botaoMedico = new Button("medico");
+        botaoMedico.setOnAction(e->instanciamedico.start(medico));
+
+        root.getChildren().addAll(botaoEnfermeiro,botaoMedico);
+        root.setAlignment(javafx.geometry.Pos.CENTER);
+
+        medico.setScene(scene);
+        medico.show();
+
+        enfermeiro.setScene(scene);
+        enfermeiro.show();
+
     }
 }
