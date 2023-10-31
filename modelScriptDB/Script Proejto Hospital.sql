@@ -44,8 +44,6 @@ CREATE TABLE medicos(
         FOREIGN KEY (idPasc) REFERENCES pacientes(Prontuario)
 );
 
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123321';
-SET GLOBAL max_connections = 1500;
 ALTER TABLE pacientes MODIFY CPF VARCHAR(15);
 
 SELECT * FROM pacientes;
