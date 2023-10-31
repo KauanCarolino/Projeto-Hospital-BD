@@ -105,8 +105,8 @@ public class MedicoDao {
         }
     }
 
-    public static Medicos getMedicoByCredentials(String username, String senha) {
-        String sql = "SELECT * FROM medicos WHERE nome = ? AND senha = ?";
+    public static Medicos getMedicoByCredentials(String crm, String senha) {
+        String sql = "SELECT * FROM medicos WHERE crm = ? AND senha = ?";
         Medicos medico = null;
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -115,7 +115,7 @@ public class MedicoDao {
         try {
             conn = ConnectionFactory.createConnectionToMySQL();
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, username);
+            pstm.setInt(1, Integer.parseInt(crm));
             pstm.setString(2, senha);
             rset = pstm.executeQuery();
 
