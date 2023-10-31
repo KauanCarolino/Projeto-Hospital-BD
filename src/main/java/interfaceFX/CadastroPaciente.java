@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CadastroPaciente extends Application {
+public class TelaCadastroPaciente extends Application {
     public static void main(String[] args) {
         launch(args);
     }
@@ -54,7 +54,7 @@ public class CadastroPaciente extends Application {
 
         /*mostra as caixas com usuario, senha e o
         demais paramentros*/
-        root.getChildren().addAll(prontuario,nome,sexo,especialidade,
+        root.getChildren().addAll(prontuario,nome,sexo,
                 telefone,dataNascimento,UF,botaoCadastrar);
 
 
