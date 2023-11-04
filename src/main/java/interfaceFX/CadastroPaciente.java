@@ -23,43 +23,49 @@ public class TelaCadastroPaciente extends Application {
         altura 200px respctivamente*/
         Scene scene = new Scene(root, 300,350);
 
-        //caixa nome prontuario
+       //caixa nome prontuario
+        Label PRONTUARIO = new Label("Prontuario");
         TextField prontuario = new TextField();
-        prontuario.setPromptText("Prontuario");
+
 
         //caixa nome
+        Label name = new Label("Nome");
         TextField nome = new TextField();
-        nome.setPromptText("Nome");
+
 
 
         //caixa SEXO
+        Label SEXO = new Label("Sexo");
         TextField sexo = new TextField();
-        sexo.setPromptText("Sexo");
 
-       
+
+
         //caixa telefone
+        Label TELEFONE = new Label("Telefone");
         TextField telefone = new TextField();
-        telefone.setPromptText("Telefone");
+
 
         //caixa data de nascimento
-        DatePicker dataNascimento = new DatePicker();
-        dataNascimento.setPromptText("Data de Nascimento");
+
 
         //caixa UF
-        TextField UF = new TextField();
-        UF.setPromptText("UF");
+        Label UF  = new Label("UF");
+        TextField uf = new TextField();
+
+        Label DATANASCIMENTO = new Label("Data de nascimento");
+        DatePicker dataNascimento = new DatePicker();
 
         Button botaoCadastrar = new Button("Cadastrar");
 
-
         /*mostra as caixas com usuario, senha e o
         demais paramentros*/
-        root.getChildren().addAll(prontuario,nome,sexo,
-                telefone,dataNascimento,UF,botaoCadastrar);
+        root.getChildren().addAll(PRONTUARIO,prontuario,name,nome,SEXO,sexo,
+        UF,uf,TELEFONE,telefone,DATANASCIMENTO);
+        root.getChildren().add(dataNascimento);
+        root.getChildren().add(botaoCadastrar);
+        root.setAlignment(javafx.geometry.Pos.CENTER);
 
-
-
-        //faz com que as caixas sejam exibidas
+         //faz com que as caixas sejam exibidas
         paciente.setScene(scene);
         paciente.show();
     }
