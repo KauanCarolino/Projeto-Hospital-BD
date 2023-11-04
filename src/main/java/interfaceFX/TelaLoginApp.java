@@ -22,15 +22,16 @@ public class TelaLoginApp extends Application {
         VBox root = new VBox(10);
         Scene scene = new Scene(root, 300, 200);
 
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("Coren ou Crm");
+        Label username = new Label("Login");
+        TextField nomeUsuario = new TextField();
 
-        PasswordField passwordField = new PasswordField();
-        passwordField.setPromptText("Senha");
+        Label senha = new Label("Senha");
+        TextField password = new TextField();
 
-        Button confirmButton = new Button("Logar-se");
+        Button buttonLogin = new Button("Confirmar");
 
-        Button botaoCadastro = new Button("Cadastra-se");
+        Button buttonCadastraSe = new Button("Cadastra-se");
+        buttonCadastraSe.setOnAction(e->instanciaCadastroFuncionario.start(cadastroFuncionario));
 
         confirmButton.setOnAction(e -> {
             String username = usernameField.getText();
@@ -51,8 +52,9 @@ public class TelaLoginApp extends Application {
 
         botaoCadastro.setOnAction(e->escolherFuncionario());
         //exibe as caixas de texto nomeUsuario, senha e os 2 botões
-        root.getChildren().addAll(usernameField,passwordField,confirmButton,botaoCadastro);
-        root.setAlignment(javafx.geometry.Pos.CENTER);
+        root.getChildren().addAll(username,nomeUsuario, senha, password,buttonLogin,buttonCadastraSe);
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(10));
 
         stage.setScene(scene);
         stage.show();
