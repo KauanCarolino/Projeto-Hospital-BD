@@ -56,9 +56,8 @@ public class CadastroFuncionario extends Application {
         Button botaoCadastrar = new Button("Cadastrar");
 
         root.getChildren().addAll(COREN,coren,CRM,crm,name,nome,SEXO,sexo,
-        UF,uf,TELEFONE,telefone,DATANASCIMENTO);
-        root.getChildren().add(dataNascimento);
-        root.getChildren().add(botaoCadastrar);
+        UF,uf,TELEFONE,telefone,DATANASCIMENTO,dataNascimento,botaoCadastrar);
+
         root.setAlignment(javafx.geometry.Pos.CENTER);
 
         root.setPadding(new Insets(10));
