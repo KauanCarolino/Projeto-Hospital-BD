@@ -1,7 +1,6 @@
 module com.example.dahospitalproject {
     requires javafx.controls;
     requires javafx.fxml;
-    requires org.kordamp.bootstrapfx.core;
     requires java.sql;
 //    requires mysql.connector.j;
 

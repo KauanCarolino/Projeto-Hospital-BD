@@ -1,23 +1,25 @@
-package com.example.trampodebd;
+
+package interfaceFX;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
+import model.Medicos;
+import model.Enfermeiros;
+import dao.MedicoDao;
+import dao.EnfermeiroDao;
 
 
 public class TelaLoginApp extends Application {
-
     public static void main(String[] args) {
         launch(args);
     }
-
     @Override
-
     //define um titulo para minha aplicação
     public void start(Stage stage) {
         stage.setTitle("Login");
@@ -34,22 +36,48 @@ public class TelaLoginApp extends Application {
         // e 300px e altura 200px
         Scene scene = new Scene(root, 300, 200);
 
-        Label username = new Label("Login");
+        Label nomeLabel = new Label("Login");
         TextField nomeUsuario = new TextField();
 
-        Label senha = new Label("Senha");
-        TextField password = new TextField();
+        Label senhaLabel = new Label("Senha");
+        TextField senha = new TextField();
 
         Button buttonLogin = new Button("Confirmar");
+        buttonLogin.setOnAction(e -> {
+            String username = nomeUsuario.getText();
+            String password = senha.getText();
+
+            Task<Void> loginTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    Medicos medico = MedicoDao.getMedicoByCredentials(username, password);
+                    Enfermeiros enfermeiro = EnfermeiroDao.getEnfermeiroByCredentials(username, password);
+
+                    Platform.runLater(() -> {
+                        if (medico != null) {
+                            exibirTelaBemVindo(medico.getNome());
+                        } else if (enfermeiro != null) {
+                            exibirTelaBemVindo(enfermeiro.getNome());
+                        } else {
+                            // Exibir mensagem de erro
+                            System.out.println("Coren/Crm ou senha inválidos.");
+                        }
+                    });
+
+                    return null;
+                }
+            };
+
+            new Thread(loginTask).start();
+        });
+
 
         Button buttonCadastraSe = new Button("Cadastra-se");
-        buttonCadastraSe.setOnAction(e->instanciaCadastroFuncionario.start
-        (cadastroFuncionario));
+        buttonCadastraSe.setOnAction(e->instanciaCadastroFuncionario.start(cadastroFuncionario));
 
 
-
-        root.getChildren().addAll(username,nomeUsuario, senha, password,
-        buttonLogin,buttonCadastraSe);
+        root.getChildren().addAll(nomeLabel,nomeUsuario, senhaLabel, senha,
+                buttonLogin,buttonCadastraSe);
         root.setAlignment(Pos.CENTER);
 
         root.setPadding(new Insets(10));
@@ -57,4 +85,20 @@ public class TelaLoginApp extends Application {
         stage.show();
     }
 
+
+    private void exibirTelaBemVindo(String nomeLabel) {
+        //cria a nova tela de boa vindas
+        Stage stageB = new Stage();
+        //defini o titulo bem vindo
+        stageB.setTitle("Bem-Vindo");
+        //cria a mensagem de boas vindas
+        Label welcomeLabel = new Label("Olá, " + nomeLabel + " seja bem-vindo!");
+        //define a caixa de boas vindas
+        StackPane layout = new StackPane(welcomeLabel);
+        //cria a cena de boa vinda de largura de 300px e altura de 100px
+        Scene sceneB = new Scene(layout, 300, 100);
+        //exibe a mensagem de boa vindas
+        stageB.setScene(sceneB);
+        stageB.show();
+    }
 }
