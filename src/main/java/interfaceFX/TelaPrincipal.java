@@ -35,6 +35,7 @@ public class TelaPrincipal extends Application {
         pacientesListView = new ListView<>();
         Button editButton = new Button("Editar Paciente");
         Button removeButton = new Button("Remover Paciente"); // Novo botão
+        Button refreshButton = new Button("Atualizar"); // Botão de atualização
 
         // Popule a ListView com os pacientes do banco de dados
         PacientesDao pacientesDao = new PacientesDao();
@@ -86,7 +87,13 @@ public class TelaPrincipal extends Application {
             }
         });
 
-        root.getChildren().addAll(titleLabel, searchField, pacientesListView, editButton, removeButton);
+        refreshButton.setOnAction(e -> {
+            // Recarregue todos os pacientes do banco de dados
+            allPacientes = pacientesDao.getPacientes();
+            atualizarListaPacientes();
+        });
+
+        root.getChildren().addAll(titleLabel, searchField, pacientesListView, editButton, removeButton, refreshButton);
 
         stage.setScene(scene);
         stage.show();
@@ -107,6 +114,67 @@ public class TelaPrincipal extends Application {
     }
 
     private void abrirJanelaEdicao(Pacientes paciente, PacientesDao pacientesDao) {
-        // ... (seu código para a janela de edição)
+        Stage stage = new Stage();
+        stage.setTitle("Editar Paciente");
+
+        VBox root = new VBox(10);
+        Scene scene = new Scene(root, 400, 300);
+
+        Label titleLabel = new Label("Editar Paciente");
+
+        TextField nomeField = new TextField();
+        nomeField.setPromptText("Nome");
+        nomeField.setText(paciente.getNome());
+
+        TextField cpfField = new TextField();
+        cpfField.setPromptText("CPF");
+        cpfField.setText(paciente.getCpf());
+
+        TextField sexoField = new TextField();
+        sexoField.setPromptText("Sexo");
+        sexoField.setText(paciente.getSexo());
+
+        TextField telefoneField = new TextField();
+        telefoneField.setPromptText("Telefone");
+        telefoneField.setText(paciente.getTelefone());
+
+        TextField dataNascField = new TextField();
+        dataNascField.setPromptText("Data de Nascimento");
+        dataNascField.setText(paciente.getDataNasc());
+
+        TextField enderecoField = new TextField();
+        enderecoField.setPromptText("Endereço");
+        enderecoField.setText(paciente.getEndereco());
+
+        TextField ufField = new TextField();
+        ufField.setPromptText("UF");
+        ufField.setText(paciente.getUf());
+
+        Button salvarButton = new Button("Salvar");
+
+        salvarButton.setOnAction(e -> {
+            // Atualize os dados do paciente com base nos valores dos campos
+            paciente.setNome(nomeField.getText());
+            paciente.setCpf(cpfField.getText());
+            paciente.setSexo(sexoField.getText());
+            paciente.setTelefone(telefoneField.getText());
+            paciente.setDataNasc(dataNascField.getText());
+            paciente.setEndereco(enderecoField.getText());
+            paciente.setUf(ufField.getText());
+
+            // Chame o método de atualização do DAO
+            pacientesDao.update(paciente);
+
+            // Feche a janela de edição
+            stage.close();
+
+            // Atualize a lista de pacientes na tela principal, se necessário
+            // TelaPrincipal.atualizarListaPacientes();
+        });
+
+        root.getChildren().addAll(titleLabel, nomeField, cpfField, sexoField, telefoneField, dataNascField, enderecoField, ufField, salvarButton);
+
+        stage.setScene(scene);
+        stage.show();
     }
 }
