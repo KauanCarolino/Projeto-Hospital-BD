@@ -40,7 +40,7 @@ public class TelaLoginApp extends Application {
         TextField nomeUsuario = new TextField();
 
         Label senhaLabel = new Label("Senha");
-        TextField senha = new TextField();
+        PasswordField senha = new PasswordField();
 
         Button buttonLogin = new Button("Confirmar");
         buttonLogin.setOnAction(e -> {
