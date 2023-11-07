@@ -9,7 +9,7 @@ public class ConnectionFactory {
 	private static final String USERNAME = "root";
 	
 	//Senha do banco
-	private static final String PASSWORD = "123321";
+	private static final String PASSWORD = "";
 	
 	//Caminho do Banco de dados, porta, nome do banco de dados
 	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/dbHospital?autoReconnect=true&useSSL=false";
