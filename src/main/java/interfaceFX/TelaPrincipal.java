@@ -28,6 +28,10 @@ public class TelaPrincipal extends Application {
 
         Label titleLabel = new Label("Lista de Pacientes");
 
+        TelaCadastroPaciente instanciaTelaCadastroPaciente = new TelaCadastroPaciente();
+
+        Stage novoPCT = new Stage();
+        
         // Campo de pesquisa
         TextField searchField = new TextField();
         searchField.setPromptText("Pesquisar por nome");
@@ -36,6 +40,8 @@ public class TelaPrincipal extends Application {
         Button editButton = new Button("Editar Paciente");
         Button removeButton = new Button("Remover Paciente"); // Novo botão
         Button refreshButton = new Button("Atualizar"); // Botão de atualização
+        Button newPacienteButton = new Button("novo paciente");
+
 
         // Popule a ListView com os pacientes do banco de dados
         PacientesDao pacientesDao = new PacientesDao();
@@ -92,8 +98,16 @@ public class TelaPrincipal extends Application {
             allPacientes = pacientesDao.getPacientes();
             atualizarListaPacientes();
         });
-
-        root.getChildren().addAll(titleLabel, searchField, pacientesListView, editButton, removeButton, refreshButton);
+        
+        newPacienteButton.setOnAction(e-> {
+            try {
+                instanciaTelaCadastroPaciente.start(novoPCT);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        
+        root.getChildren().addAll(titleLabel, searchField, pacientesListView, editButton, removeButton, refreshButton,newPacienteButton);
 
         stage.setScene(scene);
         stage.show();
