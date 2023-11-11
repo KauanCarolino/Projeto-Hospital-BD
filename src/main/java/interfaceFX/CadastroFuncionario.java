@@ -23,7 +23,7 @@ public class CadastroFuncionario extends Application {
     public void start(Stage cadastroFuncionario){
         cadastroFuncionario.setTitle("Cadastro Funcionario");
         VBox root = new VBox(10);
-        Scene scene = new Scene(root,300,470);
+        Scene scene = new Scene(root,300,670);
 
 
         Label COREN = new Label("Coren");
