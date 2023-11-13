@@ -1,5 +1,7 @@
 
 package interfaceFX;
+import com.mysql.cj.exceptions.CJOperationNotSupportedException;
+import factory.ConnectionFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -13,6 +15,9 @@ import model.Medicos;
 import model.Enfermeiros;
 import dao.MedicoDao;
 import dao.EnfermeiroDao;
+import javax.swing.JOptionPane;
+
+import java.sql.*;
 
 
 public class TelaLoginApp extends Application {
@@ -43,10 +48,10 @@ public class TelaLoginApp extends Application {
         PasswordField senha = new PasswordField();
 
         Button buttonLogin = new Button("Confirmar");
+
         buttonLogin.setOnAction(e -> {
             String username = nomeUsuario.getText();
             String password = senha.getText();
-
             Task<Void> loginTask = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
@@ -56,11 +61,17 @@ public class TelaLoginApp extends Application {
                     Platform.runLater(() -> {
                         if (medico != null) {
                             exibirTelaBemVindo(medico.getNome());
+                            nomeUsuario.setText("");
+                            senha.setText("");
                         } else if (enfermeiro != null) {
                             exibirTelaBemVindo(enfermeiro.getNome());
+                            nomeUsuario.setText("");
+                            senha.setText("");
                         } else {
                             // Exibir mensagem de erro
-                            System.out.println("Coren/Crm ou senha inválidos.");
+                            JOptionPane.showMessageDialog(null, "CRM/Coren ou senha incorretos, tente novamente");
+                            nomeUsuario.setText("");
+                            senha.setText("");
                         }
                     });
 
@@ -70,7 +81,6 @@ public class TelaLoginApp extends Application {
 
             new Thread(loginTask).start();
         });
-
 
         Button buttonCadastraSe = new Button("Cadastra-se");
         buttonCadastraSe.setOnAction(e->instanciaCadastroFuncionario.start(cadastroFuncionario));
@@ -84,6 +94,7 @@ public class TelaLoginApp extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
 
 
     private void exibirTelaBemVindo(String nomeLabel) {
