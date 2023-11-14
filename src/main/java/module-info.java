@@ -4,6 +4,7 @@ module com.example.dahospitalproject {
     requires java.sql;
     requires mysql.connector.j;
     requires java.desktop;
+    requires jBCrypt;
 //    requires mysql.connector.j;
 
     opens com.example.dahospitalproject to javafx.fxml;

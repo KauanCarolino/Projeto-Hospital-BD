@@ -60,19 +60,23 @@ public class TelaCadastroPaciente extends Application {
             novoPaciente.setEndereco(endereco.getText());
             novoPaciente.setUf(uf.getText());
 
+            if (validarCPF(cpf.getText())) {
+                // Crie uma instância do PacientesDao para salvar o novo paciente.
+                PacientesDao pacientesDao = new PacientesDao();
+                pacientesDao.save(novoPaciente);
 
-            // Crie uma instância do PacientesDao para salvar o novo paciente.
-            PacientesDao pacientesDao = new PacientesDao();
-            pacientesDao.save(novoPaciente);
-
-            // Limpe os campos do formulário após o cadastro.
-            nome.clear();
-            cpf.clear();
-            sexo.clear();
-            telefone.clear();
-            dataNascimento.clear();
-            endereco.clear();
-            uf.clear();
+                // Limpe os campos do formulário após o cadastro.
+                nome.clear();
+                cpf.clear();
+                sexo.clear();
+                telefone.clear();
+                dataNascimento.clear();
+                endereco.clear();
+                uf.clear();
+            } else {
+                // Exiba uma mensagem de erro se o CPF for inválido.
+                exibirAlerta("CPF Inválido", "O CPF inserido é inválido. Por favor, insira um CPF válido.");
+            }
         });
 
         // Adicione os elementos à cena.
@@ -92,5 +96,51 @@ public class TelaCadastroPaciente extends Application {
         // Exiba a cena.
         novoPCT.setScene(scene);
         novoPCT.show();
+    }
+
+    private boolean validarCPF(String cpf) {
+        // Remove caracteres não numéricos do CPF
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Verifica se o CPF possui 11 dígitos
+        if (cpf.length() != 11) {
+            return false;
+        }
+
+        // Calcula o primeiro dígito verificador
+        int soma = 0;
+        for (int i = 0; i < 9; i++) {
+            soma += Character.getNumericValue(cpf.charAt(i)) * (10 - i);
+        }
+        int primeiroDigito = 11 - (soma % 11);
+        if (primeiroDigito > 9) {
+            primeiroDigito = 0;
+        }
+
+        // Verifica o primeiro dígito verificador
+        if (Character.getNumericValue(cpf.charAt(9)) != primeiroDigito) {
+            return false;
+        }
+
+        // Calcula o segundo dígito verificador
+        soma = 0;
+        for (int i = 0; i < 10; i++) {
+            soma += Character.getNumericValue(cpf.charAt(i)) * (11 - i);
+        }
+        int segundoDigito = 11 - (soma % 11);
+        if (segundoDigito > 9) {
+            segundoDigito = 0;
+        }
+
+        // Verifica o segundo dígito verificador
+        return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
+    }
+
+    private void exibirAlerta(String titulo, String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
     }
 }

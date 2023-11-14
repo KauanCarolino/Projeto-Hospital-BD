@@ -50,46 +50,49 @@ public class TelaLoginApp extends Application {
         PasswordField senha = new PasswordField();
 
         Button buttonLogin = new Button("Confirmar");
-        buttonLogin.setOnAction(e-> {
-            try {
-                instanciaTelaPrincipal.start(telaPrincipal);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
+
+        buttonLogin.setOnAction(e -> {
+            String username = nomeUsuario.getText();
+            String password = senha.getText();
+            Task<Void> loginTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    Medicos medico = MedicoDao.getMedicoByCredentials(username, password);
+                    Enfermeiros enfermeiro = EnfermeiroDao.getEnfermeiroByCredentials(username, password);
+
+                    Platform.runLater(() -> {
+                        if (medico != null) {
+                            exibirTelaBemVindo(medico.getNome());
+                            nomeUsuario.setText("");
+                            senha.setText("");
+                            try {
+                                instanciaTelaPrincipal.start(telaPrincipal);
+                            } catch (Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        } else if (enfermeiro != null) {
+                            exibirTelaBemVindo(enfermeiro.getNome());
+                            nomeUsuario.setText("");
+                            senha.setText("");
+                            try {
+                                instanciaTelaPrincipal.start(telaPrincipal);
+                            } catch (Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        } else {
+                            // Exibir mensagem de erro
+                            JOptionPane.showMessageDialog(null, "CRM/Coren ou senha incorretos, tente novamente");
+                            nomeUsuario.setText("");
+                            senha.setText("");
+                        }
+                    });
+
+                    return null;
+                }
+            };
+
+            new Thread(loginTask).start();
         });
-//        buttonLogin.setOnAction(e -> {
-//            String username = nomeUsuario.getText();
-//            String password = senha.getText();
-//            Task<Void> loginTask = new Task<Void>() {
-//                @Override
-//                protected Void call() throws Exception {
-//                    Medicos medico = MedicoDao.getMedicoByCredentials(username, password);
-//                    Enfermeiros enfermeiro = EnfermeiroDao.getEnfermeiroByCredentials(username, password);
-//
-//                    Platform.runLater(() -> {
-//                        if (medico != null) {
-//                            exibirTelaBemVindo(medico.getNome());
-//                            nomeUsuario.setText("");
-//                            senha.setText("");
-//                            start(telaPrincipal);
-//                        } else if (enfermeiro != null) {
-//                            exibirTelaBemVindo(enfermeiro.getNome());
-//                            nomeUsuario.setText("");
-//                            senha.setText("");
-//                        } else {
-//                            // Exibir mensagem de erro
-//                            JOptionPane.showMessageDialog(null, "CRM/Coren ou senha incorretos, tente novamente");
-//                            nomeUsuario.setText("");
-//                            senha.setText("");
-//                        }
-//                    });
-//
-//                    return null;
-//                }
-//            };
-//
-//            new Thread(loginTask).start();
-//        });
 
         Button buttonCadastraSe = new Button("Cadastra-se");
         buttonCadastraSe.setOnAction(e->instanciaCadastroFuncionario.start(cadastroFuncionario));
@@ -103,7 +106,6 @@ public class TelaLoginApp extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 
 
     private void exibirTelaBemVindo(String nomeLabel) {

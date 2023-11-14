@@ -11,7 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Enfermeiros;
 import model.Medicos;
-import dao.MedicoDao;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 import static dao.EnfermeiroDao.save;
 import static dao.MedicoDao.save;
@@ -58,30 +59,38 @@ public class CadastroFuncionario extends Application {
         Button botaoCadastrar = new Button("Cadastrar");
         botaoCadastrar.setOnAction(event -> {
 
-            if(!coren.getText().isEmpty()){
+            if (!coren.getText().isEmpty()) {
                 Enfermeiros enfermeiros = new Enfermeiros();
                 enfermeiros.setCoren(Integer.parseInt(coren.getText()));
                 enfermeiros.setNome(nome.getText());
                 enfermeiros.setSexo(sexo.getText());
-                enfermeiros.setSenha(password.getText());
+
+                // Criptografar a senha antes de armazenar no banco de dados
+                String hashedPassword = BCrypt.hashpw(password.getText(), BCrypt.gensalt());
+                enfermeiros.setSenha(hashedPassword);
+
                 enfermeiros.setEspecialidade(especialidade.getText());
                 enfermeiros.setTelefone(telefone.getText());
                 enfermeiros.setDataNasc(dataNascimento.getText());
                 enfermeiros.setUf(uf.getText());
 
                 save(enfermeiros); // Chama o método save para inserir o enfermeiro no banco de dados
-            } else if ((!crm.getText().isEmpty())) {
+            } else if (!crm.getText().isEmpty()) {
                 Medicos medicos = new Medicos();
                 medicos.setCrm(Integer.parseInt(crm.getText()));
                 medicos.setNome(nome.getText());
                 medicos.setSexo(sexo.getText());
-                medicos.setSenha(password.getText());
+
+                // Criptografar a senha antes de armazenar no banco de dados
+                String hashedPassword = BCrypt.hashpw(password.getText(), BCrypt.gensalt());
+                medicos.setSenha(hashedPassword);
+
                 medicos.setEspecialidade(especialidade.getText());
                 medicos.setTelefone(telefone.getText());
                 medicos.setDataNasc(dataNascimento.getText());
                 medicos.setUf(uf.getText());
 
-                save(medicos);// Chama o método save para inserir o medicos no banco de dados
+                save(medicos); // Chama o método save para inserir o médico no banco de dados
             } else {
                 System.out.println("Crm ou Coren não foram preenchidos!");
             }

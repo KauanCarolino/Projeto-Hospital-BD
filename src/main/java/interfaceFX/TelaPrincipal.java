@@ -179,6 +179,7 @@ public class TelaPrincipal extends Application {
             // Chame o método de atualização do DAO
             pacientesDao.update(paciente);
 
+            exibirAlerta("Sucesso", "Usuário editado com sucesso.");
             // Feche a janela de edição
             stage.close();
 
@@ -190,5 +191,13 @@ public class TelaPrincipal extends Application {
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void exibirAlerta(String titulo, String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
     }
 }
